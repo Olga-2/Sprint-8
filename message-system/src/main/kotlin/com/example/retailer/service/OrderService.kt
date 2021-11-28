@@ -3,6 +3,7 @@ package com.example.retailer.service
 import com.example.retailer.adapter.DistributorPublisher
 import com.example.retailer.api.distributor.Order
 import com.example.retailer.api.distributor.OrderInfo
+import com.example.retailer.api.distributor.OrderStatus
 import com.example.retailer.storage.OrderStorage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -31,6 +32,8 @@ class OrderService {
         if (!distributorPublisher.placeOrder(data.order)) {
             throw IllegalStateException("Publishing failed")
         }
+        data.info.status = OrderStatus.SENT
+        updateOrderInfo(data.info)
         return data.info
     }
 

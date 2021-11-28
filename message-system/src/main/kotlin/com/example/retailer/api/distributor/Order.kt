@@ -1,13 +1,19 @@
 package com.example.retailer.api.distributor
 
+import javax.persistence.*
+
 /**
  * Описание заказа
  */
+
+@Entity
+@Table(name = "orders")
 data class Order(
     /**
      * Уникальный идентификатор заказа на стороне ретейлера
      */
-    val id: String?,
+    @Id
+    var id: String?,
 
     /**
      * Произвольный адрес доставки
@@ -22,5 +28,8 @@ data class Order(
     /**
      * Список заказанных товаров
      */
-    val items: List<Item>
+
+    @Column(name = "items")
+    @ElementCollection(targetClass = Item::class)
+    var items: List<Item>
 )
